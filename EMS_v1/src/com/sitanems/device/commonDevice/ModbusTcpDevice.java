@@ -10,6 +10,7 @@ import com.serotonin.modbus4j.msg.ModbusRequest;
 import com.serotonin.modbus4j.msg.ModbusResponse;
 import com.sitanems.modbus.inPower.InPowerRequestGen;
 import com.sitanems.modbus.parser.ModbusContext;
+import com.sitanems.modbus.util.IModbusRequestGen;
 
 public class ModbusTcpDevice {
 	public String ipAddress;
@@ -17,10 +18,10 @@ public class ModbusTcpDevice {
 	public int slaveId;
 	private TcpMaster tcpMaster;
 	ModbusFactory modbusFactory = new ModbusFactory();
-	InPowerRequestGen modbusRequestGen;
+	IModbusRequestGen modbusRequestGen;
 	
 	public ModbusTcpDevice(String ipAddress, int port, int slaveId,
-			InPowerRequestGen modbusRequestGen) {
+			IModbusRequestGen modbusRequestGen) {
 		super();
 		this.ipAddress = ipAddress;
 		this.port = port;
