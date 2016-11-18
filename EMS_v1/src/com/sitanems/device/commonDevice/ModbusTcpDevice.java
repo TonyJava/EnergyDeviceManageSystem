@@ -8,6 +8,9 @@ import com.serotonin.modbus4j.ip.tcp.TcpMaster;
 import com.serotonin.modbus4j.msg.ExceptionResponse;
 import com.serotonin.modbus4j.msg.ModbusRequest;
 import com.serotonin.modbus4j.msg.ModbusResponse;
+import com.serotonin.modbus4j.msg.ReadHoldingRegistersRequest;
+import com.serotonin.modbus4j.msg.ReadResponse;
+import com.serotonin.modbus4j.msg.WriteRegistersRequest;
 import com.sitanems.modbus.inPower.InPowerRequestGen;
 import com.sitanems.modbus.parser.ModbusContext;
 import com.sitanems.modbus.util.IModbusRequestGen;
@@ -56,19 +59,12 @@ public class ModbusTcpDevice {
 		return resp;
 	}
 	
-	public boolean execute(String name, String operate, int value)
+	public void write(String name, int value)
 	{
 		try {
 			ModbusRequest request = null;
-			if (operate.equalsIgnoreCase("W"))
-			{
-				request = modbusRequestGen.genWriteRequest(slaveId, name, value);
-			}
-			else if (operate.equalsIgnoreCase("R"))
-			{
-				request = modbusRequestGen.genReadRequest(slaveId, name);
-			}
 			
+			request = modbusRequestGen.genWriteRequest(slaveId, name, value);
 			
 			ModbusResponse response = send(request);
 			if (response instanceof ExceptionResponse == false)
@@ -82,39 +78,21 @@ public class ModbusTcpDevice {
 		} catch (ModbusTransportException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
-			return false;
 		}
-		return true;
 	}
 	
-	public boolean execute(String name, String operate)
+	public byte[] read(String name)
 	{
+		ReadHoldingRegistersRequest request = null;
+		ReadResponse response =null;
 		try {
-			ModbusRequest request = null;
-			if (operate.equalsIgnoreCase("W"))
-			{
-				request = modbusRequestGen.genWriteRequest(slaveId, name);
-			}
-			else if (operate.equalsIgnoreCase("R"))
-			{
-				request = modbusRequestGen.genReadRequest(slaveId, name);
-			}
+			request = modbusRequestGen.genReadRequest(slaveId, name);
+			response = (ReadResponse) send(request);
 			
-			
-			ModbusResponse response = send(request);
-			if (response instanceof ExceptionResponse == false)
-			{
-				System.out.println("Success!");
-			}
-			else
-			{
-				System.out.println("Failed!");
-			}
 		} catch (ModbusTransportException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
-			return false;
 		}
-		return true;
+		return response.getData();
 	}
 }
