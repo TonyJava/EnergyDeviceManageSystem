@@ -1,0 +1,17 @@
+#MyEclipse Hibernate Properties
+#Fri Nov 25 09:43:50 CST 2016
+genVersionTag=false
+sessionFactoryName=com.sitanems.persistence.HibernateSessionFactory
+genAnnotations=false
+configFile=/EMSCore_v1/src/applicationContext.xml
+reStrategyClass=
+sessionFactoryId=sessionFactory
+profile=
+detectM2M=false
+genBasicCompId=false
+keyGenerator=
+createConfigFile=true
+basePersistenceClass=
+detectO2O=false
+useJavaTypes=true
+reSettingsFile=

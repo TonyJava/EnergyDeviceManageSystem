@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+
+<hibernate-mapping>
+    <class name="com.sitanems.appInterface.DataInfo" table="RTDataMain" catalog="test">
+        <id name="id" type="int">
+            <column name="ID" />
+				<generator class="increment" />
+        </id>                
+          
+        <map name="values" table="RTDataDetail">  
+           <key column="id"></key>  
+           <index column="name" type="java.lang.String"></index>  
+           <element column="value" type="java.lang.Integer"></element>  
+        </map>
+    </class>
+</hibernate-mapping>

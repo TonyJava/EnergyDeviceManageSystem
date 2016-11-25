@@ -8,7 +8,7 @@ import com.sitanems.modbus.inPower.InPowerModbusMetaItem;
 
 public class ModbusContext {
 
-	private Map<String, IModbusMetaItem> itemMap = null;
+	public Map<String, IModbusMetaItem> itemMap = null;
 	private ModbusCfgFileParser parser = null;
 	
 	public ModbusContext(ModbusCfgFileParser parser)
@@ -23,7 +23,8 @@ public class ModbusContext {
 		for (int i = 0; i < list.size(); i++)
 		{
 			IModbusMetaItem item = list.get(i);
-			itemMap.put(item.getToken(), item);
+			String temp  = item.getToken();
+			itemMap.put(temp, item);
 		}
 	}
 	

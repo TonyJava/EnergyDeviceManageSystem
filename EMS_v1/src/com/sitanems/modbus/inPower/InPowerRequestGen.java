@@ -44,7 +44,7 @@ public class InPowerRequestGen implements IModbusRequestGen{
 		InPowerModbusMetaItem item = (InPowerModbusMetaItem) modbusContext.getItem(name);
 		if (checkAuthority(item.authority, "R"))
 		{
-			req = new ReadHoldingRegistersRequest(slaveId, item.addr + 0x1000, 1);
+			req = new ReadHoldingRegistersRequest(slaveId, item.addr/* + 0x1000*/, 1);
 		}
 		
 		return req;

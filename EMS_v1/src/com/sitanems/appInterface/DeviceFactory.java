@@ -8,10 +8,11 @@ import java.util.Map;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
 
 import com.sitanems.device.commonDevice.ModbusTcpDevice;
+import com.sitanems.springInterface.ContextFactory;
 
 public class DeviceFactory {
 	private static DeviceFactory instance =null;
-	private static ClassPathXmlApplicationContext ctx = null;
+	
 	private static Map<String, String> deviceMap;
 	private DeviceFactory()
 	{
@@ -23,7 +24,6 @@ public class DeviceFactory {
 		if (instance == null)
 		{
 			instance = new DeviceFactory();
-			ctx = new ClassPathXmlApplicationContext("applicationContext.xml");
 			deviceMap = new HashMap<String, String>();
 			fillMap();
 		}
@@ -41,7 +41,8 @@ public class DeviceFactory {
 	
 	public ModbusTcpDevice getDevice(DeviceInfo dInfo)
 	{
-		ModbusTcpDevice device = (ModbusTcpDevice) ctx.getBean(deviceMap.get(dInfo.type));
+		ModbusTcpDevice device = (ModbusTcpDevice) ContextFactory.
+				getApplicationContext().getBean(deviceMap.get(dInfo.type));
 		device.ipAddress = dInfo.ipAddr;
 		device.port = dInfo.port;
 		device.slaveId = dInfo.slaveId;
