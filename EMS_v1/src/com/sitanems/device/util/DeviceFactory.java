@@ -12,16 +12,24 @@ import com.sitanems.device.commonDevice.ModbusTcpDevice;
 import com.sitanems.springInterface.ContextFactory;
 
 public class DeviceFactory {
-	private static DeviceFactory instance =null;
+	//private static DeviceFactory instance =null;
 	
 	private Map<String, String> deviceMap;
+	public Map<String, String> getDeviceMap() {
+		return deviceMap;
+	}
+
+	public void setDeviceMap(Map<String, String> deviceMap) {
+		this.deviceMap = deviceMap;
+	}
+
 	private DeviceFactory()
 	{
-		deviceMap = new HashMap<String, String>();
-		fillMap();
+		//deviceMap = new HashMap<String, String>();
+		//fillMap();
 	}
 	
-	public static DeviceFactory getInstance()
+/*	public static DeviceFactory getInstance()
 	{
 		if (instance == null)
 		{
@@ -37,7 +45,7 @@ public class DeviceFactory {
 			deviceMap.put("inPower", "inPowerDevice");
 			deviceMap.put("highVoltage", "highVoltageDevice");
 		}
-	}
+	}*/
 	
 	public ModbusTcpDevice getDevice(DeviceInfo dInfo)
 	{

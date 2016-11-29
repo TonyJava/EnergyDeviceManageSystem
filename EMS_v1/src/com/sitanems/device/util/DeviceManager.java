@@ -5,12 +5,15 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import com.sitanems.appInterface.DeviceConfiger;
 import com.sitanems.data.DeviceInfo;
 import com.sitanems.device.commonDevice.ModbusTcpDevice;
+import com.sitanems.springInterface.ContextFactory;
 
 public class DeviceManager {
 	private List<DeviceInfo> dInfoList = null;
 	private Map<DeviceInfo, ModbusTcpDevice> deviceMap = null;
+	private DeviceFactory deviceFactory = null;
 	
 	public List<DeviceInfo> getdInfoList() {
 		return dInfoList;
@@ -50,9 +53,11 @@ public class DeviceManager {
 	public void initDevice()
 	{
 		ModbusTcpDevice tempDevice = null;
+		deviceFactory = (DeviceFactory) ContextFactory.
+				getApplicationContext().getBean("deviceFactory");
 		for (int i = 0; i < dInfoList.size(); i++)
 		{
-			tempDevice = DeviceFactory.getInstance().getDevice(dInfoList.get(i));
+			tempDevice = deviceFactory.getDevice(dInfoList.get(i));
 			deviceMap.put(dInfoList.get(i), tempDevice);
 		}
 	}
@@ -60,10 +65,18 @@ public class DeviceManager {
 	public void dynamicAddDevice(DeviceInfo dInfo)
 	{
 		dInfoList.add(dInfo);
-		ModbusTcpDevice temp = DeviceFactory.getInstance().getDevice(dInfo);
+		ModbusTcpDevice temp = deviceFactory.getDevice(dInfo);
 		deviceMap.put(dInfo, temp);
 	}
 	
+	public DeviceFactory getDeviceFactory() {
+		return deviceFactory;
+	}
+
+	public void setDeviceFactory(DeviceFactory deviceFactory) {
+		this.deviceFactory = deviceFactory;
+	}
+
 	public ModbusTcpDevice getDevice(DeviceInfo dInfo)
 	{
 		return deviceMap.get(dInfo);

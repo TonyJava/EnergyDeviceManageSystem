@@ -81,8 +81,25 @@
 		<constructor-arg value ="1" />
 	</bean>
 	
+	<!--initial DeviceConfiger-->
+	<bean id="deviceFactory"
+		class="com.sitanems.device.util.DeviceFactory">
+		<property name="deviceMap">
+             <map>
+		        <entry key ="inPower" value = "inPowerDevice"/>
+		        <entry key ="highVoltage" value = "highVoltageDevice"/>
+            </map>
+        </property>
+	</bean>
+	
+	<bean id="deviceManager"
+		class="com.sitanems.device.util.DeviceManager">
+		<property name="deviceFactory" ref = "deviceFactory"/>
+	</bean>
+		
 	<bean id="deviceConfiger"
 		class="com.sitanems.appInterface.DeviceConfiger">
+		<property name="dManager" ref = "deviceManager"/>
 		<property name="dInfoList">
             <list>
                 <ref bean = "inPowerDeviceInfo"/>
