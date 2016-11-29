@@ -12,6 +12,7 @@ public class SimpleTest2 {
 		DataAcquireAssistant dataAcquire = (DataAcquireAssistant) ContextFactory.
 				getApplicationContext().getBean("dataAcquireAssistant");
 		deviceConfiger.init();
+		dataAcquire.init();
 		dataAcquire.startAcquire();
 	}
 

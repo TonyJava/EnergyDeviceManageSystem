@@ -33,6 +33,11 @@ public class ModbusTcpDevice {
 	public Map<String, String> varInfoMap;
 	private Map<String, Integer> varValueMap;
 
+	public ModbusTcpDevice(IModbusRequestGen modbusRequestGen,
+			IVarInfoGen varInfoGen) {
+		this(null, 0, 0, modbusRequestGen, varInfoGen);
+	}
+
 	public ModbusTcpDevice(String ipAddress, int port, int slaveId,
 			IModbusRequestGen modbusRequestGen, IVarInfoGen varInfoGen) {
 		super();

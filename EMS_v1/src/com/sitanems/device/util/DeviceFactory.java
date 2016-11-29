@@ -14,24 +14,23 @@ import com.sitanems.springInterface.ContextFactory;
 public class DeviceFactory {
 	private static DeviceFactory instance =null;
 	
-	private static Map<String, String> deviceMap;
+	private Map<String, String> deviceMap;
 	private DeviceFactory()
 	{
-		
+		deviceMap = new HashMap<String, String>();
+		fillMap();
 	}
 	
 	public static DeviceFactory getInstance()
 	{
 		if (instance == null)
 		{
-			instance = new DeviceFactory();
-			deviceMap = new HashMap<String, String>();
-			fillMap();
+			instance = new DeviceFactory();	
 		}
 		return instance;
 	}
 	
-	public static void fillMap()
+	public void fillMap()
 	{
 		if (deviceMap != null)
 		{
@@ -47,7 +46,7 @@ public class DeviceFactory {
 		device.ipAddress = dInfo.ipAddr;
 		device.port = dInfo.port;
 		device.slaveId = dInfo.slaveId;
-		
+		device.init();
 		return device;
 	}
 	

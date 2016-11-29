@@ -1,8 +1,10 @@
 package com.sitanems.appInterface;
 
 import java.util.List;
+import java.util.Map;
 
 import com.sitanems.data.DeviceInfo;
+import com.sitanems.device.commonDevice.ModbusTcpDevice;
 import com.sitanems.device.util.DeviceManager;
 
 public class DeviceConfiger {
@@ -34,5 +36,9 @@ public class DeviceConfiger {
 	{
 		dManager.addDevice(dInfoList);
 		dManager.initDevice();
+	}
+	
+	public Map<DeviceInfo, ModbusTcpDevice> getDeviceMap() {
+		return dManager.getDeviceMap();
 	}
 }

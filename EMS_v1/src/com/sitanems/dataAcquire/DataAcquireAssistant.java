@@ -1,13 +1,18 @@
 package com.sitanems.dataAcquire;
 
 import java.sql.Timestamp;
+import java.util.Date;
 import java.util.List;
+import java.util.Map;
 import java.util.Timer;
 import java.util.TimerTask;
 
+import com.sitanems.appInterface.DeviceConfiger;
+import com.sitanems.data.DeviceInfo;
 import com.sitanems.data.RTDataInfo;
 import com.sitanems.device.commonDevice.ModbusTcpDevice;
 import com.sitanems.event.util.BasicEventGenerator;
+import com.sitanems.springInterface.ContextFactory;
 
 public class DataAcquireAssistant extends BasicEventGenerator{
 	private List<ModbusTcpDevice> deviceList = null;
@@ -15,7 +20,17 @@ public class DataAcquireAssistant extends BasicEventGenerator{
 	private AcquireTask task = null;
 	private long peroid;
 	private long delay;
+	private DeviceConfiger deviceConfiger = null;
+	private Map<DeviceInfo, ModbusTcpDevice> deviceMap = null;
 	
+	public long getDelay() {
+		return delay;
+	}
+
+	public void setDelay(long delay) {
+		this.delay = delay;
+	}
+
 	public List<ModbusTcpDevice> getDeviceList() {
 		return deviceList;
 	}
@@ -36,8 +51,16 @@ public class DataAcquireAssistant extends BasicEventGenerator{
 	{
 		timer = new Timer();
 		task = new AcquireTask();
-		peroid = 30000;
+		peroid = 10000;
 		delay = 1000;
+		
+	}
+	
+	public void init()
+	{
+		deviceConfiger = (DeviceConfiger) ContextFactory.
+				getApplicationContext().getBean("deviceConfiger");
+		deviceMap = deviceConfiger.getDeviceMap();
 	}
 	
 	public void startAcquire()
@@ -53,16 +76,19 @@ public class DataAcquireAssistant extends BasicEventGenerator{
 	class AcquireTask extends TimerTask {  
 		private ModbusTcpDevice tempDevice = null;
 	    @Override  
-	    public void run() {  
-	        for (int i = 0; i < deviceList.size(); i++)
+	    public void run() {
+	    	System.out.println("begin time :" + new Date());
+	        for (Map.Entry<DeviceInfo, ModbusTcpDevice> entry : deviceMap.entrySet())
 	        {
-	        	tempDevice = deviceList.get(i);
+	        	System.out.println("device info :" + entry.getKey().type);
+	        	tempDevice = entry.getValue();
 	        	tempDevice.updateAllVar();
 	        	RTDataInfo dataInfo = 
 	        		new RTDataInfo(1, new Timestamp(System.currentTimeMillis()), 
 	        				tempDevice.getAllVarValue());
 	        	publish(new AcquireDataEvent(dataInfo));
 	        }
+	        System.out.println("end time :" + new Date());
 	    }   
 	} 
 	

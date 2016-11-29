@@ -26,11 +26,10 @@
 	</bean>
 	
 	<bean id="inPowerDevice"
-		class="com.sitanems.device.commonDevice.ModbusTcpDevice"
-		init-method="init" scope="prototype">
-		<constructor-arg value ="127.0.0.1" />
+		class="com.sitanems.device.commonDevice.ModbusTcpDevice" scope="prototype">
+    <!--<constructor-arg value ="127.0.0.1" />
 		<constructor-arg value ="503" />
-		<constructor-arg value ="1" />
+		<constructor-arg value ="1" /> -->
 		<constructor-arg ref ="inPowerRequestGen" />
 		<constructor-arg ref ="inPowerVarInfoGen" />
 	</bean>
@@ -57,11 +56,10 @@
 	</bean>
 	
 	<bean id="highVoltageDevice"
-		class="com.sitanems.device.commonDevice.ModbusTcpDevice"
-		init-method="init" scope = "prototype">
-		<constructor-arg value ="127.0.0.1" />
+		class="com.sitanems.device.commonDevice.ModbusTcpDevice" scope = "prototype">
+		<!-- <constructor-arg value ="127.0.0.1" />
 		<constructor-arg value ="502" />
-		<constructor-arg value ="2" />
+		<constructor-arg value ="2" /> -->
 		<constructor-arg ref ="highVoltageRequestGen" />
 		<constructor-arg ref ="highVoltageVarInfoGen" />
 	</bean>
@@ -101,12 +99,14 @@
 	<!--initial DataAcquireAssistant-->
 	<bean id="dataAcquireAssistant"
 		class="com.sitanems.dataAcquire.DataAcquireAssistant">
-		<property name="deviceList">
+		<property name="peroid" value="15000" />
+		<property name="delay" value="3000" />
+        <!--<property name="deviceList">
             <list>
                 <ref bean = "inPowerDevice"/>
                 <ref bean = "highVoltageDevice"/>
             </list>
-        </property>
+        </property> -->
         <property name="listenerList">
             <list>
                 <ref bean = "dataStorageAssistant"/>
