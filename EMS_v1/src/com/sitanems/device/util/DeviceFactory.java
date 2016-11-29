@@ -1,4 +1,4 @@
-package com.sitanems.appInterface;
+package com.sitanems.device.util;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -7,6 +7,7 @@ import java.util.Map;
 
 import org.springframework.context.support.ClassPathXmlApplicationContext;
 
+import com.sitanems.data.DeviceInfo;
 import com.sitanems.device.commonDevice.ModbusTcpDevice;
 import com.sitanems.springInterface.ContextFactory;
 

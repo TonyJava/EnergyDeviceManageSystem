@@ -1,14 +1,14 @@
-package com.sitanems.appInterface;
+package com.sitanems.data;
 
 import java.util.Date;
 import java.util.Map;
 
-public class DataInfo {
+public class RTDataInfo {
 	public int id;
 	public Date dt;
 	public Map<String, Integer> values;
 
-	public DataInfo(int id, Date dt, Map<String, Integer> values) {
+	public RTDataInfo(int id, Date dt, Map<String, Integer> values) {
 		this.id = id;
 		this.dt = dt;
 		this.values = values;

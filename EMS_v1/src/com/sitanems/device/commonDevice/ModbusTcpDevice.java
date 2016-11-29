@@ -66,19 +66,18 @@ public class ModbusTcpDevice {
 			throws ModbusTransportException
 	{
 		ModbusResponse resp = null;
-		if(tcpMaster.isInitialized() == true)
-		{
+		//if(tcpMaster.isInitialized() == true)
+		//{
 			resp = tcpMaster.send(request);
-		}
+		//}
 		return resp;
 	}
 	
 	public void write(String name, int value)
 	{
 		try {
-			ModbusRequest request = null;
-			
-			request = modbusRequestGen.genWriteRequest(slaveId, name, value);
+			ModbusRequest request = 
+					modbusRequestGen.genWriteRequest(slaveId, name, value);
 			
 			ModbusResponse response = send(request);
 			if (response instanceof ExceptionResponse == false)
@@ -95,19 +94,18 @@ public class ModbusTcpDevice {
 		}
 	}
 	
-	public byte[] read(String name)
+	public byte[] read(String name) throws ModbusTransportException
 	{
-		ReadHoldingRegistersRequest request = null;
-		ReadResponse response =null;
-		try {
-			request = modbusRequestGen.genReadRequest(slaveId, name);
-			response = (ReadResponse) send(request);
-			
-		} catch (ModbusTransportException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+		byte[] temp = null;
+		ModbusRequest request = null;
+		ModbusResponse response =null;
+		request = modbusRequestGen.genReadRequest(slaveId, name);
+		response = send(request);
+		if (response instanceof ReadResponse)
+		{
+			temp = ((ReadResponse)response).getData();
 		}
-		return response.getData();
+		return temp;
 	}
 	
 	public void initVarMap()
@@ -134,8 +132,18 @@ public class ModbusTcpDevice {
 	
 	public void updateVar(String var)
 	{
-		byte[] result = read(var);
-		varValueMap.put(var, byte2int(result));
+		byte[] result = null;
+		try {
+			result = read(var);
+		} catch (ModbusTransportException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		if (result != null)
+		{
+			varValueMap.put(var, byte2int(result));
+		}
+
 	}
 	
 	public Map<String, Integer> getAllVarValue()
@@ -143,12 +151,23 @@ public class ModbusTcpDevice {
 		return varValueMap;
 	}
 	
-	public static int byte2int(byte[] res) {   
+	/*public static int byte2int(byte[] res) {   
 		// 一个byte数据左移24位变成0x??000000，再右移8位变成0x00??0000   
 		  
-		/*int targets = (res[0] & 0xff) | ((res[1] << 8) & 0xff00) // | 表示安位或   
+		int targets = (res[0] & 0xff) | ((res[1] << 8) & 0xff00) // | 表示安位或   
 		| ((res[2] << 24) >>> 8) | (res[3] << 24);   
-		return targets;   */
+		return targets;   
 		return 5;
-		} 
+		}*/
+	
+	public static int byte2int(byte[] bRefArr) {
+	    int iOutcome = 0;
+	    byte bLoop;
+
+	    for (int i = 0; i < bRefArr.length; i++) {
+	        bLoop = bRefArr[i];
+	        iOutcome += (bLoop & 0xFF) << (8 * i);
+	    }
+	    return iOutcome;
+	}
 }

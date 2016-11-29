@@ -1,4 +1,4 @@
-package com.sitanems.appInterface;
+package com.sitanems.data;
 
 public class DeviceInfo {
 	public String type;

@@ -3,12 +3,13 @@
 "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
 
 <hibernate-mapping>
-    <class name="com.sitanems.appInterface.DataInfo" table="RTDataMain" catalog="test">
+    <class name="com.sitanems.data.RTDataInfo" table="RTDataMain" catalog="test">
         <id name="id" type="int">
             <column name="ID" />
 				<generator class="increment" />
         </id>                
-          
+         
+        <property column="DateTime" name="dt" not-null="false" type="timestamp"/> 
         <map name="values" table="RTDataDetail">  
            <key column="id"></key>  
            <index column="name" type="java.lang.String"></index>  

@@ -23,7 +23,10 @@ public class InPowerVarInfoGen implements IVarInfoGen {
 		for (int i = 0; i < tempList.size(); i++)
 		{
 			item = (InPowerModbusMetaItem)tempList.get(i);
-			result.put(item.name, item.dataType);
+			if (item.authority.contains("R"))
+			{
+				result.put(item.name, item.dataType);
+			}
 		}
 		return result;
 	}

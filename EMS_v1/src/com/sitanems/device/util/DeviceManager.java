@@ -5,14 +5,29 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import com.sitanems.appInterface.DeviceFactory;
-import com.sitanems.appInterface.DeviceInfo;
+import com.sitanems.data.DeviceInfo;
 import com.sitanems.device.commonDevice.ModbusTcpDevice;
 
 public class DeviceManager {
-	public List<DeviceInfo> dInfoList = null;
-	public Map<DeviceInfo, ModbusTcpDevice> deviceMap = null;
+	private List<DeviceInfo> dInfoList = null;
+	private Map<DeviceInfo, ModbusTcpDevice> deviceMap = null;
 	
+	public List<DeviceInfo> getdInfoList() {
+		return dInfoList;
+	}
+
+	public void setdInfoList(List<DeviceInfo> dInfoList) {
+		this.dInfoList = dInfoList;
+	}
+
+	public Map<DeviceInfo, ModbusTcpDevice> getDeviceMap() {
+		return deviceMap;
+	}
+
+	public void setDeviceMap(Map<DeviceInfo, ModbusTcpDevice> deviceMap) {
+		this.deviceMap = deviceMap;
+	}
+
 	public DeviceManager()
 	{
 		dInfoList = new ArrayList<DeviceInfo>();
