@@ -14,13 +14,9 @@ public class RTDataInfo {
 		this.values = values;
 	}
 
-	
-	
 	public void setId(int id) {
 		this.id = id;
 	}
-
-
 
 	public int getId() {
 		return id;
